@@ -1,4 +1,8 @@
 <template>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  />
   <div class="top full-width flex row justify-between absolute-top">
     {{ drawer }}
     <q-img class="icones-top items-right" src="../../assets/logo-topbar.svg" />

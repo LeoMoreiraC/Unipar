@@ -1,4 +1,8 @@
 <template>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  />
   <div class="top flex collum justify-between absolute-left">
     <MenuDrawer :drawer="drawer" @close="drawer = false" />
     <q-icon

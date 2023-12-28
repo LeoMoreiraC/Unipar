@@ -1,5 +1,9 @@
 <template>
-  <div class="q-pa-md">
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  />
+  <div>
     <q-drawer
       show-if-above
       :width="200"

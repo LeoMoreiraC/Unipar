@@ -17,10 +17,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ParqueTecnologicoDTO {
+    private Long id;
     private Long patrimonio;
-    private Processador processador;
+    private String processador;
     private String geracao;
-    private Setor setor;
+    private String setor;
     private Long ram;
     private String hd;
     private StatusEnum status;

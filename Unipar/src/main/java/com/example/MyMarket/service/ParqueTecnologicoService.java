@@ -28,19 +28,13 @@ public class ParqueTecnologicoService {
 
     @Transactional
     public ParqueTecnologicoDTO salvarParqueTecnologico(ParqueTecnologicoDTO parqueTecnologicoDTO) throws Exception {
-        var setor = parqueTecnologicoDTO.getSetor();
-        var processador = parqueTecnologicoDTO.getProcessador();
+
         var parqueTecnologico = ParqueTecnologico.builder()
+                .id(parqueTecnologicoDTO.getId())
                 .patrimonio(parqueTecnologicoDTO.getPatrimonio())
-                .processador(Processador.builder()
-                        .id(processador.getId())
-                        .nome(processador.getNome())
-                        .build())
+                .processador(parqueTecnologicoDTO.getProcessador())
                 .geracao(parqueTecnologicoDTO.getGeracao())
-                .setor(Setor.builder()
-                        .id(setor.getId())
-                        .nome(setor.getNome())
-                        .build())
+                .setor(parqueTecnologicoDTO.getSetor())
                 .ram(parqueTecnologicoDTO.getRam())
                 .hd(parqueTecnologicoDTO.getHd())
                 .status(StatusEnum.ATIVO)

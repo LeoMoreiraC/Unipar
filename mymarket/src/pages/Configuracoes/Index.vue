@@ -172,9 +172,9 @@
               Cadastro de Processador
             </q-item-label>
             <q-table
-              :rows2="rows2"
+              :rows="rowsProcessador"
               :filter="filter"
-              :columns2="columns2"
+              :columns="columnsProcessador"
               dark
               key="id"
               row-key="name"
@@ -203,7 +203,7 @@
                     icon="create"
                     color="primary"
                     dense
-                    @click="openEditProcessador(props.row2)"
+                    @click="openEditProcessador(props.row)"
                   />
                   <q-dialog v-model="confirmaEditarProcessador">
                     <q-card class="top">
@@ -239,7 +239,7 @@
                             class="row"
                             flat
                             label="Salvar"
-                            @click="salvarEdicaoProcessador(props.row2)"
+                            @click="salvarEdicaoProcessador(props.row)"
                             color="green"
                             v-close-popup
                           />
@@ -253,7 +253,7 @@
                     color="negative"
                     dense
                     class="q-ml-sm"
-                    @click="openDeleteDialog(props.row2)"
+                    @click="openDeleteProcessador(props.row)"
                   />
                   <q-dialog v-model="confirmaDeletarProcessador" persistent>
                     <q-card class="top">
@@ -274,7 +274,7 @@
                         <q-btn
                           flat
                           label="Sim"
-                          @click="deletaProcessador(props.row2)"
+                          @click="deletaProcessador(props.row)"
                           color="primary"
                           v-close-popup
                         />
@@ -331,7 +331,7 @@ export default {
     const $q = useQuasar();
     return {
       deletedRow: null,
-      deletedRow2: null,
+      deletedRowProcessador: null,
       status: ["ATIVO", "INATIVO"],
       filter: "",
       confirmaEditarSetor: false,
@@ -370,27 +370,27 @@ export default {
           align: "center",
         },
       ],
-      rows2: [],
-      columns2: [
+      rowsProcessador: [],
+      columnsProcessador: [
         {
           name: "id",
           label: "ID",
           align: "left",
-          field: (row2) => row2.id,
+          field: (rowProcessador) => rowProcessador.id,
           sortable: true,
         },
         {
           name: "nome",
-          label: "Setor",
+          label: "Processador",
           align: "left",
-          field: (row2) => row2.nome,
+          field: (rowProcessador) => rowProcessador.nome,
           sortable: true,
         },
         {
           name: "status",
           label: "Status",
           align: "left",
-          field: (row2) => row2.status,
+          field: (rowProcessador) => rowProcessador.status,
           sortable: true,
         },
 
@@ -407,6 +407,7 @@ export default {
       editarProcessador: false,
       novoProcessador: false,
       editedRow: { id: null, nome: "", status: "" },
+      editedRowProcessador: { id: null, nome: "", status: "" },
     };
   },
   mounted() {
@@ -456,7 +457,7 @@ export default {
       this.lLista = true;
       api.get("/processador").then((resp) => {
         console.log(resp);
-        this.rows2 = resp.data;
+        this.rowsProcessador = resp.data;
         this.lLista = false;
       });
     },
@@ -472,8 +473,8 @@ export default {
     deletaSetor(row) {
       console.log(this.deletedRow.id);
 
-      api.delete(`/setor/${this.deletedRow.id}`).then(() => {
-        this.carregarTodos();
+      api.delete(`/processador/${this.deletedRow.id}`).then(() => {
+        this.carregarTodosProcessador();
       });
       const index = this.rows.findIndex(
         (item) => item.id === this.deletedRow.id
@@ -504,31 +505,35 @@ export default {
       this.editedRow = { ...row };
       this.confirmaEditarSetor = true;
     },
-
-    openDeleteDialogProcessador(row2) {
-      this.deletedRow2 = { ...row2 };
+    openDeleteProcessador(row) {
+      this.deletedRowProcessador = { ...row };
       this.confirmaDeletarProcessador = true;
     },
+
+    openEditProcessador(row) {
+      this.editedRowProcessador = { ...row };
+      this.confirmaEditarProcessador = true;
+    },
     cancelaDeletarProcessador() {
-      this.deletedRow2 = null;
+      this.deletedRowProcessador = null;
       this.confirmaDeletarProcessador = false;
     },
-    deletaProcessador(row2) {
-      console.log(this.deletedRow2.id);
+    deletaProcessador(row) {
+      console.log(this.deletedRowProcessador.id);
 
-      api.delete(`/processador/${this.deletedRow2.id}`).then(() => {
+      api.delete(`/processador/${this.deletedRowProcessador.id}`).then(() => {
         this.carregarTodosProcessador();
       });
-      const index = this.rows2.findIndex(
-        (item) => item.id === this.deletedRow2.id
+      const index = this.rowsProcessador.findIndex(
+        (item) => item.id === this.deletedRowProcessador.id
       );
 
       // Remover a linha da tabela
       if (index !== -1) {
-        this.rows2.splice(index, 1);
+        this.rowsProcessador.splice(index, 1);
       }
       // Limpar a variável deletedRow
-      this.deletedRow2 = null;
+      this.deletedRowProcessador = null;
 
       // Fechar o diálogo
       this.confirmaDeletarProcessador = false;
@@ -536,17 +541,13 @@ export default {
     salvarEdicaoProcessador(row) {
       api
         .post("/processador", {
-          id: this.editedRow2.id,
-          nome: this.editedRow2.nome,
-          status: this.editedRow2.status,
+          id: this.editedRowProcessador.id,
+          nome: this.editedRowProcessador.nome,
+          status: this.editedRowProcessador.status,
         })
         .then(() => {
           this.carregarTodosProcessador();
         });
-    },
-    openEditDialogProcessador(row2) {
-      this.editedRow2 = { ...row2 };
-      this.confirmaEditarProcessador = true;
     },
   },
 };

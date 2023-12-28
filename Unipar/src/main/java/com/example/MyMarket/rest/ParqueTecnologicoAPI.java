@@ -1,6 +1,7 @@
 package com.example.MyMarket.rest;
 
 import com.example.MyMarket.dto.ParqueTecnologicoDTO;
+import com.example.MyMarket.dto.SetorDTO;
 import com.example.MyMarket.service.ParqueTecnologicoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -26,11 +27,21 @@ public class ParqueTecnologicoAPI {
     //cadastra os produtos
     @PostMapping(value = "/api/v1/parqueTecnologico", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> cadastrar(@RequestBody ParqueTecnologicoDTO parqueTecnologicoDTO) throws Exception {
-        if (parqueTecnologicoService.existePatrimonio(parqueTecnologicoDTO.getPatrimonio())) {
-            return ResponseEntity.badRequest().body("O patrimônio já existe. Não é possível cadastrar novamente.");
+        if (parqueTecnologicoDTO.getPatrimonio() != null) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(parqueTecnologicoService.salvarParqueTecnologico(parqueTecnologicoDTO));
         }
-        return ResponseEntity.ok(parqueTecnologicoService.salvarParqueTecnologico(parqueTecnologicoDTO));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(parqueTecnologicoService.salvarParqueTecnologico(parqueTecnologicoDTO));
     }
+
+//    @PostMapping(value = "/api/v1/parqueTecnologico", consumes = "application/json", produces = "application/json")
+//    public ResponseEntity<?> cadastrar(@RequestBody ParqueTecnologicoDTO parqueTecnologicoDTO) throws Exception {
+//        if (parqueTecnologicoService.existePatrimonio(parqueTecnologicoDTO.getPatrimonio())) {
+//            return ResponseEntity.badRequest().body("O patrimônio já existe. Não é possível cadastrar novamente.");
+//        }
+//        return ResponseEntity.ok(parqueTecnologicoService.salvarParqueTecnologico(parqueTecnologicoDTO));
+//    }
 //
 //    // deleta produtos por codigo
 //    @DeleteMapping(value = "/api/v1/produto", consumes = "application/json", produces = "application/json")

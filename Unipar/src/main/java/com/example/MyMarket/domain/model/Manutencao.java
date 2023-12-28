@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,25 +13,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ParqueTecnologico {
+public class Manutencao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long id;
     @Column
     private Long patrimonio;
     @Column
-    private String processador;
+    private String descricao;
     @Column
-    private String geracao;
+    private String status;
     @Column
-    private String setor;
-    @Column
-    private Long ram;
-    @Column
-    private String hd;
-    @Column
-    @Enumerated(EnumType.STRING)
-    private StatusEnum status;
-    @Column
-    private LocalDateTime dataAlteracao;
+    private LocalDateTime dataCadastro;
 }

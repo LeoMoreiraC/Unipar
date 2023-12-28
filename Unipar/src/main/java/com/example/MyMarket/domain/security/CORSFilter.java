@@ -27,5 +27,8 @@ class CorsConfiguration implements WebMvcConfigurer {
         registry.addMapping("/api/v1/*")
                 .allowedOrigins("http://localhost:9000")
                 .allowedMethods("POST","GET","DELETE");
+        registry.addMapping("/api/v1/processador/*")
+                .allowedOrigins("http://localhost:9000")
+                .allowedMethods("POST","GET","DELETE");
     }
 }
